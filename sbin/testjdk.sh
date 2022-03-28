@@ -73,6 +73,7 @@ function TestJDK () {
 function InitJtregCommand () {
   JTREG_CMD="${BUILD_CONFIG[JTREG_HOME]}/bin/jtreg"
   AddTestJDKDir
+  AddIgnoreQuiet
 }
 
 function AddVerbose () {
@@ -116,6 +117,11 @@ function AddExcludeFile () {
   PrintInfo "Exclude tests:"
   cat "$1"
   JTREG_CMD="$JTREG_CMD -exclude:$1"
+}
+
+function AddIgnoreQuiet () {
+  PrintInfo "Jtreg tests quient ignore tests"
+  JTREG_CMD="$JTREG_CMD -ignore:quiet"
 }
 
 function RunTestCases () {
