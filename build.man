@@ -1,0 +1,87 @@
+.\" Man Page for build.sh
+.TH "2.0.0" "Apache 2"
+.SH NAME
+build.sh
+.SH SYNOPSIS
+"./build.sh [options]"
+.SH DESCRIPTION
+This script is the entry point for building and testing BiShengJDK. Currently
+it's only used by Code Gate running on OpenEuler Docker.
+
+\fBExample:\fR The simplest use case to run is:
+
+"./build.sh --jdk jdk8u"
+
+This will build you the latest Java 8 BiSheng binary from the source 
+at https://gitee.com/openeuler/bishengjdk-8
+
+If you want to get the latest BiShengJDK, please 
+visit https://www.hikunpeng.com/developer/devkit/compiler/jdk.
+
+.SH OPTIONS
+.TP
+.BR \-b ", " \-\-branch " " \fI<branch>\fR
+specify a custom branch to build from, e.g. master.
+The default value is master.
+.TP
+.BR \-\-boot-jdk-dir " " \fI<boot-jdk-dir>\fR
+specify the JDK boot dir.
+For reference, BiShengJDK needs the previous version of a JDK in order to build
+itself. You should select the path to a JDK install that is N-1 versions below
+the one you are trying to build.
+.TP
+.BR \-B ", " \-\-build-number " " \fI<build_number>\fR
+specify the BiShengJDK build number to build from, e.g. b13.
+For reference, BiShengJDK version numbers look like 1.8.0_162-b13 (for Java 8) or
+11.0.4+12 (for Java 11/17) with the build number being the suffix at the end.
+.TP
+.BR \-\-build-type  " " \fI<ci|release|debug>\fR
+specify the purpose to build jdk.
+For reference, 'ci' is to build and test, 'release' is to
+build and archive, and 'debug' is to build a jdk with debug symbols.
+.TP
+.BR \-\-build-variant " " \fI<jdk8|jdk11|jdk11|riscv>\fR
+specify a BiShengJDK build variant, e.g. jdk8u.
+If this option is not given, the variant is deduced by the repository.
+.TP
+.BR \-c ", " \-\-configure-args " " \fI<args>\fR
+specify any custom user configuration arguments.
+.TP
+.BR \-\-create-jre-image
+create the legacy JRE image in addition to the JDK image.
+.TP
+.BR \-d ", " \-\-destination " " \fI<path>\fR
+specify the location for the built binary, e.g. /path/.
+.TP
+.BR \-h ", " \-\-help
+print this help.
+.TP
+.BR \-\-jvm-variant " " \fI<jvm_variant>\fR
+specify the JVM variant (server or client), defaults to server.
+.TP
+.BR \-\-make-args " " \fI<args>\fR
+specify any custom user make arguments.
+.TP
+.BR \-r ", " \-\-repository " " \fI<repository>\fR
+specify the repository to clone OpenJDK source from,
+e.g. https://gitee.com/openeuler/bishengjdk-8.
+.TP
+.BR \-s ", " \-\-source " " \fI<path>\fR
+specify the location of BiShengJDK source.
+.TP
+.BR \-t ", " \-\-tag " " \fI<tag>\fR
+specify the repository tag that you want to build OpenJDK from.
+.TP
+.BR \-u ", " \-\-update-version " " \fI<update_version>\fR
+specify the update version to build OpenJDK from, e.g. 162.
+For reference, OpenJDK version numbers look like 1.8.0_162-b13 (for Java 8) or
+11.0.4+12 (for Java 11/17) with the update number being the number after the '_'
+(162) or the 3rd position in the semVer version string (4).
+
+.SH EXAMPLE USAGE
+
+Some common example usages:
+
+"./build.sh --build-type ci -s path/to/src --build-variant jdk8"
+
+"./build.sh --build-type release --build-variant jdk8"
