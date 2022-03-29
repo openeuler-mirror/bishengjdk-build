@@ -21,6 +21,7 @@ source "${ROOT_DIR}/sbin/common/common.sh"
 JTREG_REPORT_RESULT_FILES_DIR="${ROOT_DIR}/test/jtreg"
 JTREG_CMD=
 
+
 function TestJDK () {
   source "$BISHENGJDK_DEFAULT_CONFIG_BUILD_CONFIG_FILE"
 
@@ -30,6 +31,7 @@ function TestJDK () {
 
   InitJtregCommand
   AddVerbose summary
+  AddConcurrency "$(expr $(nproc) / 2)"
 
   rm -rf "${JTREG_REPORT_RESULT_FILES_DIR}" || true
   AddTestWorkDir work
@@ -51,7 +53,10 @@ function TestJDK () {
   GenerateFailedandErrorLogFromSummaryLog "$jtregTestLog" "$failLog" "$errorLog"
 
   cat "$errorLog" >> "$failLog"
-  if [[ "$(cat $failLog | wc -l)" -ne 0 ]]; then
+  local totalFailNumber=$(cat $failLog | wc -l)
+  if [[ "$totalFailNumber" -gt "${BUILD_CONFIG[ABORT_RETEST_MAX_NUMBER]}" ]]; then
+    PrintError "Too much fails($totalFailNumber) to retest. Check report in ${JTREG_REPORT_RESULT_FILES_DIR}"
+  elif [[ "$totalFailNumber" -ne 0 ]]; then
     PrintInfo "Retest failed and error testcases"
     InitJtregCommand
     AddVerbose all
@@ -73,6 +78,7 @@ function TestJDK () {
 function InitJtregCommand () {
   JTREG_CMD="${BUILD_CONFIG[JTREG_HOME]}/bin/jtreg"
   AddTestJDKDir
+  AddIgnoreQuiet
 }
 
 function AddVerbose () {
@@ -116,6 +122,16 @@ function AddExcludeFile () {
   PrintInfo "Exclude tests:"
   cat "$1"
   JTREG_CMD="$JTREG_CMD -exclude:$1"
+}
+
+function AddIgnoreQuiet () {
+  PrintInfo "Jtreg tests quient ignore tests"
+  JTREG_CMD="$JTREG_CMD -ignore:quiet"
+}
+
+function AddConcurrency () {
+  PrintInfo "Add run tests concurrency: $1"
+  JTREG_CMD="$JTREG_CMD -conc:$1"
 }
 
 function RunTestCases () {

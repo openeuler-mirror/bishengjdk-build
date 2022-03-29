@@ -20,6 +20,10 @@ visit https://www.hikunpeng.com/developer/devkit/compiler/jdk.
 
 .SH OPTIONS
 .TP
+.BR \-\-abort-retest-number " " \fI<number>\fR
+specify the number to abort jtreg retest in CI mode, e.g. 100.
+The default value is 50.
+.TP
 .BR \-b ", " \-\-branch " " \fI<branch>\fR
 specify a custom branch to build from, e.g. master.
 The default value is master.

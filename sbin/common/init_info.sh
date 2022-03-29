@@ -37,6 +37,8 @@ BUILD_JDK_BUILD_TYPE=release
 BUILD_JDK_JDK_PATH=
 BUILD_JDK_JRE_PATH=
 
+JREG_TEST_ABORT_RETEST_MAX_NUMBER=50
+
 BISHENGJDK_REPO_URL=
 BISHENGJDK_REPO_BRANCH=
 BISHENGJDK_REPO_TAG=
@@ -48,7 +50,8 @@ BISHENGJDK_SOURCE_ARCHIVE_PREFIX=srcArchive
 
 # please keep the args in lexicographic order
 function ParseArguements () {
-  local longArgs=(branch: boot-jdk-dir: build-number: build-type: build-variant: \
+  local longArgs=(abort-retest-number: \
+                  branch: boot-jdk-dir: build-number: build-type: build-variant: \
                   configure-args: create-jre-image \
                   destination: \
                   help \
@@ -71,6 +74,9 @@ function ParseArguements () {
     opt=$1;
     shift;
     case "$opt" in
+
+      --abort-retest-number)
+        JREG_TEST_ABORT_RETEST_MAX_NUMBER="$1"; shift;;
 
       --boot-jdk-dir)
         BUILD_JDK_BOOT_JDK="$1"; shift;;
@@ -325,4 +331,6 @@ function SetJtregTestCases () {
   BUILD_CONFIG[JTREG_TEST_CASES]="$(echo ${testCases} | sed 's/[ ][ ]*/ /g')"
 
   BUILD_CONFIG[JTREG_TEST_EXCLUDE]="$(echo ${JTREG_TEST_EXCLUDE} | sed 's/[ ][ ]*/ /g')"
+
+  BUILD_CONFIG[ABORT_RETEST_MAX_NUMBER]="$JREG_TEST_ABORT_RETEST_MAX_NUMBER"
 }
