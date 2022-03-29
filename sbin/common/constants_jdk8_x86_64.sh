@@ -15,4 +15,7 @@ export DEFAULT_MAKE_ARGS="LOG=debug"
 export RELEASE_MAKE_TARGETS="images"
 export TARGET_FILE_TEMPLATE="bisheng-jdk-8uREPLACE-linux-x64"
 export JTREG_TEST_EXCLUDE="gc/g1/TestFromCardCacheIndex.java \
-                           gc/g1/TestG1NUMATouchRegions.java"
+                           gc/g1/TestG1NUMATouchRegions.java \
+                           com/sun/jdi/RedefineCrossEvent.java \
+                           java/util/TimeZone/DefaultTimeZoneTest.java \
+                           tools/javac/diags/CheckExamples.java"

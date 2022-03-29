@@ -18,6 +18,9 @@ export TARGET_FILE_TEMPLATE="bisheng-jdk-8uREPLACE-linux-aarch64"
 
 export JTREG_TEST_EXCLUDE="gc/g1/TestFromCardCacheIndex.java \
                            gc/g1/TestG1NUMATouchRegions.java \
+                           com/sun/jdi/RedefineCrossEvent.java \
+                           java/util/TimeZone/DefaultTimeZoneTest.java \
+                           tools/javac/diags/CheckExamples.java \
                            compiler/rtm/locking/TestRTMAbortRatio.java \
                            compiler/rtm/locking/TestRTMAbortThreshold.java \
                            compiler/rtm/locking/TestRTMAfterNonRTMDeopt.java \
