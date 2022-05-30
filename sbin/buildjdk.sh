@@ -192,7 +192,7 @@ function CreateArchive () {
 
   if [[ -d "${jreTargetPath}" ]]; then
     PrintInfo "BiShengJDK JRE path := ${jreTargetPath}"
-    local jreName=$(echo "${BUILD_CONFIG[TARGET_FILE_NAME]}" | sed 's/^jdk/jre/')
+    local jreName=$(echo "${BUILD_CONFIG[TARGET_FILE_NAME]}" | sed 's/jdk/jre/')
     BuildJDKCreateTarArchive "${jreTargetPath}" "${jreName}"
   fi
   if [[ -d "${debugInfoPath}" ]]; then
@@ -223,7 +223,7 @@ function BuildJDKCreateTarArchive () {
 
 function AddCheckSumforArchiveBinaries () {
   local jdkName="${BUILD_CONFIG[TARGET_FILE_NAME]}.tar.gz"
-  local jreName="$(echo ${BUILD_CONFIG[TARGET_FILE_NAME]} | sed 's/^jdk/jre/').tar.gz"
+  local jreName="$(echo ${BUILD_CONFIG[TARGET_FILE_NAME]} | sed 's/jdk/jre/').tar.gz"
 
   cd "${BUILD_CONFIG[OUTPUT_DIR]}"
   if [[ -f "${jreName}" ]]; then
