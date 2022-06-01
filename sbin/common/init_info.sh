@@ -62,7 +62,7 @@ function ParseArguements () {
                   tag: \
                   update-version: \
                   )
-  local args=$(getopt -a -o hbBcdhrstu \
+  local args=$(getopt -a -o b:B:c:d:hr:s:t:u: \
                           -l $(echo "${longArgs[*]}" | tr ' ' ',') -- "$@")
   if [ $? -ne 0 ]; then
     echo "[Usage]: invalid arguments !"
