@@ -57,6 +57,7 @@ function InstallJDKBuildTools () {
                       cups-devel \
                       freetype-devel \
                       alsa-lib-devel \
+                      unzip \
                       fontconfig-devel)
   if [[ -z "${BUILD_CONFIG[BOOT_JDK]}" ]]; then 
     if [[ "${BUILD_CONFIG[BUILD_VARIANT]}" = "${BISHENGJDK_8_BUILD_VARIANT}" ]]; then
