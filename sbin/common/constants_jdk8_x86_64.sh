@@ -18,4 +18,19 @@ export JTREG_TEST_EXCLUDE="gc/g1/TestFromCardCacheIndex.java \
                            gc/g1/TestG1NUMATouchRegions.java \
                            com/sun/jdi/RedefineCrossEvent.java \
                            java/util/TimeZone/DefaultTimeZoneTest.java \
-                           tools/javac/diags/CheckExamples.java"
+                           tools/javac/diags/CheckExamples.java \
+                           compiler/rtm/locking/TestRTMAbortRatio.java \
+                           compiler/rtm/locking/TestRTMAbortThreshold.java \
+                           compiler/rtm/locking/TestRTMAfterNonRTMDeopt.java \
+                           compiler/rtm/locking/TestRTMDeoptOnHighAbortRatio.java \
+                           compiler/rtm/locking/TestRTMDeoptOnLowAbortRatio.java \
+                           compiler/rtm/locking/TestRTMLockingCalculationDelay.java \
+                           compiler/rtm/locking/TestRTMLockingThreshold.java \
+                           compiler/rtm/locking/TestRTMRetryCount.java \
+                           compiler/rtm/locking/TestRTMSpinLoopCount.java \
+                           compiler/rtm/locking/TestRTMTotalCountIncrRate.java \
+                           compiler/rtm/locking/TestUseRTMAfterLockInflation.java \
+                           compiler/rtm/locking/TestUseRTMDeopt.java \
+                           compiler/rtm/locking/TestUseRTMForInflatedLocks.java \
+                           compiler/rtm/locking/TestUseRTMForStackLocks.java \
+                           compiler/rtm/locking/TestUseRTMXendForLockBusy.java"
