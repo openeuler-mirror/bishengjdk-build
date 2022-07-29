@@ -43,4 +43,5 @@ export JTREG_TEST_EXCLUDE="runtime/exceptionMsgs/ArrayIndexOutOfBoundsException/
                            runtime/Nestmates/privateStaticMethods/TestJNI.java \
                            runtime/noClassDefFoundMsg/NoClassDefFoundMsg.java \
                            runtime/SameObject/SameObject.java \
-                           runtime/SharedArchiveFile/serviceability/ReplaceCriticalClasses.java"
+                           runtime/SharedArchiveFile/serviceability/ReplaceCriticalClasses.java \
+                           gc/survivorAlignment/TestPromotionToSurvivor.java"
