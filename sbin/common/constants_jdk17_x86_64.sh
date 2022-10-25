@@ -22,6 +22,7 @@ export JTREG_TEST_EXCLUDE="runtime/cds/DeterministicDump.java \
                            runtime/exceptionMsgs/ArrayStoreException/ArrayStoreExceptionTest.java \
                            runtime/jsig/Testjsig.java \
                            runtime/logging/loadLibraryTest/LoadLibraryTest.java \
+                           runtime/cds/serviceability/ReplaceCriticalClassesForSubgraphs.java \
                            gc/g1/TestPeriodicCollectionJNI.java \
                            runtime/Thread/SuspendAtExit.java \
                            gc/cslocker/TestCSLocker.java \
