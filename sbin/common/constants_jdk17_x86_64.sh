@@ -16,6 +16,7 @@ export JTREG_TEST_EXCLUDE="runtime/cds/DeterministicDump.java \
                            gc/stringdedup/TestStringDeduplicationPrintOptions.java \
                            gc/stringdedup/TestStringDeduplicationTableResize.java \
                            gc/stringdedup/TestStringDeduplicationYoungGC.java \
+                           gc/g1/humongousObjects/objectGraphTest/TestObjectGraphAfterGC.java \
                            runtime/exceptionMsgs/ArrayIndexOutOfBoundsException/ArrayIndexOutOfBoundsExceptionTest.java#id0 \
                            runtime/exceptionMsgs/ArrayIndexOutOfBoundsException/ArrayIndexOutOfBoundsExceptionTest.java#id1 \
                            runtime/exceptionMsgs/ArrayStoreException/ArrayStoreExceptionTest.java \
