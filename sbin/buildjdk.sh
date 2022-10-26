@@ -63,11 +63,8 @@ function ConfigureArgs () {
     fi
   fi
 
-  # set linking of C++ runtime on Linux
-  if [[ "${BUILD_CONFIG[BUILD_VARIANT]}" = "${BISHENGJDK_8_BUILD_VARIANT}" ||
-        "${BUILD_CONFIG[BUILD_VARIANT]}" = "${BISHENGJDK_11_BUILD_VARIANT}" ]]; then
-    AddConfigureArg "--with-stdc++lib" "dynamic"
-  fi
+  # set linking of C++ runtime dynamically on Linux
+  AddConfigureArg "--with-stdc++lib" "dynamic"
 
   # set debug symbols
   AddConfigureArg "--with-debug-level" "release"
@@ -90,6 +87,11 @@ function ConfigureArgs () {
   AddConfigureArg "--with-jvm-variants" "${BUILD_CONFIG[JVM_VARIANT]}"
   if [[ "${BUILD_CONFIG[MAJOR_NUMBER]}" -gt 8 ]]; then
     AddConfigureArg "--with-vendor-version-string" "${BUILD_CONFIG[VENDOR_NAME]}"
+  fi
+
+  # add bep configure option
+  if [[ "${BUILD_CONFIG[BUILD_VARIANT]}" = "${BISHENGJDK_17_BUILD_VARIANT}" ]]; then
+    AddConfigureArg "--with-source-date" "version"
   fi
 
   # put user specified args last position to make them the highest priority
