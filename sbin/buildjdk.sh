@@ -71,7 +71,8 @@ function ConfigureArgs () {
 
   # set debug symbols
   AddConfigureArg "--with-debug-level" "release"
-  AddConfigureArg "--with-native-debug-symbols" "none"
+  AddConfigureArg "--with-native-debug-symbols" "external"
+
   if [[ "${BUILD_CONFIG[BUILD_TYPE]}" = "debug" ]]; then
     AddConfigureArg "---with-debug-level" "fastdebug"
     AddConfigureArg "--with-native-debug-symbols" "external"
@@ -131,15 +132,20 @@ function GetJreArchivePath () {
   echo $(GetJdkArchivePath) | sed 's/jdk/jre/'
 }
 
-function GetDebugInfoArchivePath () {
-  echo $(GetJdkArchivePath) | sed 's/jdk/debuginfo/'
+function GetJdkDebugInfoArchivePath () {
+  echo "$(GetJdkArchivePath)_debuginfo"
+}
+
+function GetJreDebugInfoArchivePath (){
+  echo "$(GetJreArchivePath)_debuginfo"
 }
 
 # Clean up
-RemovingDebugFiles() {
+function RemovingDebugFiles () {
   local jdkTargetPath=$(GetJdkArchivePath)
   local jreTargetPath=$(GetJreArchivePath)
-  local debugInfoPath=$(GetDebugInfoArchivePath)
+  local jdkDebugInfoPath=$(GetJdkDebugInfoArchivePath)
+  local jreDebugInfoPath=$(GetJreDebugInfoArchivePath)
 
   PrintInfo "Removing unnecessary files now..."
 
@@ -167,38 +173,54 @@ RemovingDebugFiles() {
   # Builds don't normally include debug symbols, but if they were explicitly 
   # requested via the configure option '--with-native-debug-symbols=(internal|external)' 
   # leave them alone.
-  if [[ "${BUILD_CONFIG[BUILD_TYPE]}" != "release" ]]; then
+  if [[ "${BUILD_CONFIG[BUILD_TYPE]}" = "release" ]]; then
     debugSymbols=$(find "${jdkTargetPath}" -type f -name "*.debuginfo")
 
-    # if debug symbols were found, copy them to a different folder
+   # if debug symbols were found, copy them to a different folder
     if [[ -n "${debugSymbols}" ]]; then
-      PrintInfo "Copying found debug symbols to ${debugInfoPath}"
-      mkdir -p "${debugInfoPath}"
-      echo "${debugSymbols}" | cpio -pdm "${debugInfoPath}"
-      find "${jdkTargetPath}" "${jreTargetPath}" -name "*.debuginfo" | xargs rm -f || true
+      CopyingAndRemovingDebuginfo ${jdkDebugInfoPath} ${jdkTargetPath}
+      if [[ -d "${jreTargetPath}" ]]; then
+        CopyingAndRemovingDebuginfo ${jreDebugInfoPath} ${jreTargetPath}
+      fi
     fi
   fi
 
   PrintInfo "Finished removing debug symbols files from ${jdkTargetPath}"
 }
 
+function CopyingAndRemovingDebuginfo () {
+  local debugInfoPath=$1
+  local targetPath=$2
+
+  PrintInfo "Copying found debug symbols to ${debugInfoPath}"
+  mkdir -p "${debugInfoPath}"
+  echo "$(find "${targetPath}" -type f -name "*.debuginfo")" | cpio -pdm "${debugInfoPath}"
+  find "${targetPath}" -name "*.debuginfo" | xargs rm -f || true
+}
+
+
 function CreateArchive () {
   local jdkTargetPath=$(GetJdkArchivePath)
   local jreTargetPath=$(GetJreArchivePath)
-  local debugInfoPath=$(GetDebugInfoArchivePath)
+  local jdkDebugInfoPath=$(GetJdkDebugInfoArchivePath)
+  local jreDebugInfoPath=$(GetJreDebugInfoArchivePath)
+  local jreName=$(echo "${BUILD_CONFIG[TARGET_FILE_NAME]}" | sed 's/jdk/jre/')
 
   cd "${BUILD_CONFIG[WORKSPACE]}"
   cd build/*/images || PrintError "JDK Build Image failed!"
 
+  if [[ -d "${jreDebugInfoPath}" ]]; then
+    PrintInfo "BiShengJDK debuginfo path := ${jreDebugInfoPath}"
+    BuildJDKCreateTarArchive "${jreDebugInfoPath}" "$(echo "${jreName}_debuginfo")"
+  fi
+
   if [[ -d "${jreTargetPath}" ]]; then
     PrintInfo "BiShengJDK JRE path := ${jreTargetPath}"
-    local jreName=$(echo "${BUILD_CONFIG[TARGET_FILE_NAME]}" | sed 's/jdk/jre/')
     BuildJDKCreateTarArchive "${jreTargetPath}" "${jreName}"
   fi
-  if [[ -d "${debugInfoPath}" ]]; then
-    PrintInfo "BiShengJDK debuginfo path := ${debugInfoPath}"
-    local debugInfoName=$(echo "${BUILD_CONFIG[TARGET_FILE_NAME]_debuginfo}")
-    BuildJDKCreateTarArchive "${debugInfoPath}" "${debugInfoName}"
+  if [[ -d "${jdkDebugInfoPath}" ]]; then
+    PrintInfo "BiShengJDK debuginfo path := ${jdkDebugInfoPath}"
+    BuildJDKCreateTarArchive "${jdkDebugInfoPath}" "$(echo "${BUILD_CONFIG[TARGET_FILE_NAME]}_debuginfo")"
   fi
 
   PrintInfo "BiShengJDK JDK path := ${jdkTargetPath}"
