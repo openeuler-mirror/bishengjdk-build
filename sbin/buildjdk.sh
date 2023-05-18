@@ -65,8 +65,7 @@ function ConfigureArgs () {
 
   # set linking of C++ runtime on Linux
   if [[ "${BUILD_CONFIG[BUILD_VARIANT]}" = "${BISHENGJDK_8_BUILD_VARIANT}" ||
-        "${BUILD_CONFIG[BUILD_VARIANT]}" = "${BISHENGJDK_11_BUILD_VARIANT}" ||
-        "${BUILD_CONFIG[BUILD_VARIANT]}" = "${BISHENGJDK_17_BUILD_VARIANT}" ]]; then
+        "${BUILD_CONFIG[BUILD_VARIANT]}" = "${BISHENGJDK_11_BUILD_VARIANT}" ]]; then
     AddConfigureArg "--with-stdc++lib" "dynamic"
   fi
 
