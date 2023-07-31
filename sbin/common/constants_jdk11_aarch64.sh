@@ -34,6 +34,7 @@ export JTREG_TEST_EXCLUDE="runtime/exceptionMsgs/ArrayIndexOutOfBoundsException/
                            runtime/jni/ReturnJNIWeak/ReturnJNIWeak.java \
                            runtime/jni/terminatedThread/TestTerminatedThread.java \
                            runtime/jni/ToStringInInterfaceTest/ToStringTest.java \
+                           runtime/jni/nativeStack/TestNativeStack.java \
                            runtime/modules/getModuleJNI/GetModule.java \
                            runtime/Nestmates/privateConstructors/TestJNI.java \
                            runtime/Nestmates/privateFields/TestJNI.java \
