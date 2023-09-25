@@ -19,6 +19,7 @@ export JTREG_TEST_EXCLUDE="gc/g1/TestFromCardCacheIndex.java \
                            com/sun/jdi/RedefineCrossEvent.java \
                            java/util/TimeZone/DefaultTimeZoneTest.java \
                            tools/javac/diags/CheckExamples.java \
+                           testlibrary_tests/TestMutuallyExclusivePlatformPredicates.java \
                            compiler/rtm/locking/TestRTMAbortRatio.java \
                            compiler/rtm/locking/TestRTMAbortThreshold.java \
                            compiler/rtm/locking/TestRTMAfterNonRTMDeopt.java \
