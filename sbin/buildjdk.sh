@@ -69,11 +69,12 @@ function ConfigureArgs () {
   fi
 
   # set debug symbols
-  AddConfigureArg "--with-debug-level" "release"
-  AddConfigureArg "--with-native-debug-symbols" "external"
-
+  if [[ "${BUILD_CONFIG[BUILD_TYPE]}" = "ci" ]]; then
+    AddConfigureArg "--with-debug-level" "release"
+    AddConfigureArg "--with-native-debug-symbols" "external"
+  fi
   if [[ "${BUILD_CONFIG[BUILD_TYPE]}" = "debug" ]]; then
-    AddConfigureArg "---with-debug-level" "fastdebug"
+    AddConfigureArg "--with-debug-level" "fastdebug"
     AddConfigureArg "--with-native-debug-symbols" "external"
   fi
 
