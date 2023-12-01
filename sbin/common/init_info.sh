@@ -326,6 +326,8 @@ function SetJtregTestCases () {
   if [[ "${BUILD_CONFIG[BUILD_VARIANT]}" = "${BISHENGJDK_8_BUILD_VARIANT}" ]]; then
     testCases="hotspot/test:hotspot_tier1 \
                jdk/test:jdk_tier1 \
+               jdk/test:jdk_io \
+               jdk/test:jdk_net \
                langtools/test:langtools_tier1"
   fi
   BUILD_CONFIG[JTREG_TEST_CASES]="$(echo ${testCases} | sed 's/[ ][ ]*/ /g')"
