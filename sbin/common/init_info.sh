@@ -92,7 +92,7 @@ function ParseArguements () {
 
       --build-variant)
         case "$1" in
-          jdk8|jdk11|jdk17|riscv)
+          jdk8|jdk11|jdk17|jdk21|riscv)
             BUILD_JDK_VARIANT="$1"; shift;;
           *)
             PrintError "Only jdk8|jdk11|jdk17|riscv is supported!"
