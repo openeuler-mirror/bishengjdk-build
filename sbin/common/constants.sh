@@ -4,6 +4,7 @@
 export BISHENGJDK_8_BUILD_VARIANT="jdk8"
 export BISHENGJDK_11_BUILD_VARIANT="jdk11"
 export BISHENGJDK_17_BUILD_VARIANT="jdk17"
+export BISHENGJDK_21_BUILD_VARIANT="jdk21"
 export BISHENGJDK_RISCV_BUILD_VARIANT="riscv"
 
 export BISHENGJDK_DEFAULT_SOURCE_DIR="${ROOT_DIR}/src"
@@ -17,7 +18,7 @@ export BISHENGJDK_DEFAULT_VENDOR_NAME="BiSheng"
 export BISHENGJDK_DEFAULT_BASE_REPO_URL="https://gitee.com/openeuler/"
 
 declare -A BISHENGJDK_REPO_DEFAULT_URL
-for i in 8 11 17 RISCV
+for i in 8 11 17 21 RISCV
 do
   bishengjdkBuildVarient=BISHENGJDK_${i}_BUILD_VARIANT
   bishengjdkDefaultRepoURL="${BISHENGJDK_DEFAULT_BASE_REPO_URL}bishengjdk-$(echo ${i} | awk '{print tolower($0)}')/"

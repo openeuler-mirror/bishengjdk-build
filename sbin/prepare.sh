@@ -25,6 +25,9 @@ BUILD_JDK_RESOURCE_DIR="${ROOT_DIR}/resources"
 BUILD_JDK_17_DEFAULT_AARCH64_BOOT_JDK_URL="https://mirrors.huaweicloud.com/kunpeng/archive/compiler/bisheng_jdk/bisheng-jdk-17.0.1-linux-aarch64.tar.gz"
 BUILD_JDK_17_DEFAULT_X86_64_BOOT_JDK_URL="https://mirrors.huaweicloud.com/kunpeng/archive/compiler/bisheng_jdk/bisheng-jdk-17.0.1-linux-x64.tar.gz"
 
+BUILD_JDK_21_DEFAULT_AARCH64_BOOT_JDK_URL="https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.1%2B12/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.1_12.tar.gz"
+BUILD_JDK_21_DEFAULT_X86_64_BOOT_JDK_URL="https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.1%2B12/OpenJDK21U-jdk_x64_linux_hotspot_21.0.1_12.tar.gz"
+
 JTREG_5_DOWNLOAD_URL="https://ci.adoptopenjdk.net/view/Dependencies/job/dependency_pipeline/lastSuccessfulBuild/artifact/jtreg/jtreg5.1-b01.tar.gz"
 JTREG_6_DOWNLOAD_URL="https://ci.adoptopenjdk.net/view/Dependencies/job/dependency_pipeline/lastSuccessfulBuild/artifact/jtreg/jtreg-6+1.tar.gz"
 
@@ -73,6 +76,15 @@ function InstallJDKBuildTools () {
       fi
       tar -xf bishengjdk-17.tar.gz
       BUILD_CONFIG[BOOT_JDK]="${BUILD_JDK_RESOURCE_DIR}/bisheng-jdk-17.0.1"
+    elif [[ "${BUILD_CONFIG[BUILD_VARIANT]}" = "${BISHENGJDK_21_BUILD_VARIANT}" ]]; then
+      cd "${ROOT_DIR}/resources"
+      if [[ "${BUILD_CONFIG[ARCH]}" = "aarch64" ]]; then
+        DownloadFile "${BUILD_JDK_21_DEFAULT_AARCH64_BOOT_JDK_URL}" bishengjdk-21.tar.gz
+      else
+        DownloadFile "${BUILD_JDK_21_DEFAULT_X86_64_BOOT_JDK_URL}" bishengjdk-21.tar.gz
+      fi
+      tar -xf bishengjdk-21.tar.gz
+      BUILD_CONFIG[BOOT_JDK]="${BUILD_JDK_RESOURCE_DIR}/jdk-21.0.1+12"
     fi
   fi
   if [[ "${BUILD_CONFIG[ARCH]}" = "aarch64" ]]; then
